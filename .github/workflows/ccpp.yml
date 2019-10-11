@@ -33,6 +33,9 @@ jobs:
         echo 'export PATH="/usr/local/opt/qt/bin:$PATH"' >> ~/.bash_profile
         brew install xz
     - name: Configure
-      run: qmake .
+      run: |
+        export PATH="/usr/local/opt/qt/bin:$PATH"
+        ls /usr/local/opt/qt/bin
+        qmake .
     - name: Build
       run: make -j2
