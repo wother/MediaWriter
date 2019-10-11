@@ -32,9 +32,10 @@ jobs:
         brew install qt
         echo 'export PATH="/usr/local/opt/qt/bin:$PATH"' >> ~/.bash_profile
         brew install xz
+        brew install git
     - name: Configure
       run: |
-        export PATH="/usr/local/opt/qt/bin:$PATH"
+        export PATH="/usr/local/opt/qt/bin:/usr/local/opt/git/bin:$PATH"
         ls /usr/local/opt/qt/bin
         qmake .
     - name: Build
