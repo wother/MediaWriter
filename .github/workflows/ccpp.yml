@@ -3,7 +3,7 @@ name: Automatic build
 on: [push]
 
 jobs:
-  linux:
+  Linux:
 
     runs-on: ubuntu-latest
     
@@ -20,7 +20,7 @@ jobs:
     - name: Build
       run: make -j2
 
-  macis:
+  macOS:
     runs-on: macOS-latest
     
     steps:
@@ -29,7 +29,8 @@ jobs:
         fetch-depth: 1
     - name: Install dependencies
       run: |
-        brew install qt5
+        brew install qt
+        echo 'export PATH="/usr/local/opt/qt/bin:$PATH"' >> ~/.bash_profile
         brew install xz
     - name: Configure
       run: qmake .
