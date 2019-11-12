@@ -52,7 +52,7 @@ jobs:
       uses: jurplel/install-qt-action@v1
       with:
         version: 5.12.5
-        arch: win32_mingw53
+        arch: win32_mingw73
     - name: ls
       shell: bash
       run: |
