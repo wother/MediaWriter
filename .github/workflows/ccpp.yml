@@ -74,6 +74,6 @@ jobs:
       run: |
         mkdir build
         cd build
-        ../Qt5.12.5/5.12.5/mingw73_32/bin/qmake ..
+        ../Qt5.12.5/5.12.5/mingw73_32/bin/qmake.exe ..
         mingw32-make -j2
 
