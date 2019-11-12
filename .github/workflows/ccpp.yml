@@ -60,4 +60,6 @@ jobs:
         set -e
         ls
         ls ..
+        ls ../Qt5.12.5/
+        tree -L 3 ../Qt5.12.5/
 
