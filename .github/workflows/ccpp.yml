@@ -49,7 +49,7 @@ jobs:
       with:
         fetch-depth: 1
     - name: Install Qt
-      uses: Skycoder42/action-setup-qt@v1
+      uses: Skycoder42/action-setup-qt@master
       with:
         version: 5.12.5
         platform: win32_mingw73
