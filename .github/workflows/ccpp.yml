@@ -52,6 +52,7 @@ jobs:
       run: |
         choco install wget
         choco install 7zip
+        pip install requests
     - name: Install Qt
       run: |
         wget https://git.kaidan.im/lnj/qli-installer/raw/master/qli-installer.py
