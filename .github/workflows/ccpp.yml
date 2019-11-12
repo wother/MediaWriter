@@ -60,6 +60,13 @@ jobs:
         set -e
         ls
         ls ..
+        echo "--"
         ls ../Qt5.12.5/
-        tree -L 3 ../Qt5.12.5/
+        echo "--"
+        ls ../Qt5.12.5/5.12.5/
+        echo "--"
+        ls ../Qt5.12.5/Tools/
+        echo "--"
+        ls ../Qt5.12.5/5.12.5/win32_mingw73/
+        echo "--"
 
