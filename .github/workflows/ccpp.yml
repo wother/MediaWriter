@@ -41,7 +41,7 @@ jobs:
     - name: Build
       run: make -j2
 
-  macOS:
+  Windows:
     runs-on: windows-latest
 
     steps:
