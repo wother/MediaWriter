@@ -22,7 +22,7 @@ jobs:
 
   macOS:
     runs-on: macOS-latest
-    
+
     steps:
     - uses: actions/checkout@v1
       with:
@@ -40,3 +40,20 @@ jobs:
         qmake .
     - name: Build
       run: make -j2
+
+  macOS:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v1
+      with:
+        fetch-depth: 1
+    - name: Install dependencies
+      run: |
+        choco install wget
+        choco install 7z
+    - name: Install Qt
+      run: |
+        wget https://git.kaidan.im/lnj/qli-installer/raw/master/qli-installer.py
+        python qli-installer.py 5.12.3 windows desktop win32_mingw73
+
