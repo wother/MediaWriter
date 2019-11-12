@@ -48,11 +48,13 @@ jobs:
     - uses: actions/checkout@v1
       with:
         fetch-depth: 1
+    - name: Install dependencies
+      run: |
+        pip install aqtinstall
     - name: Install Qt
-      uses: Skycoder42/action-setup-qt@master
-      with:
-        version: 5.12.5
-        platform: win32_mingw73
+      shell: bash
+      run: |
+        aqt install --outputdir ../Qt 5.12.5 windows desktop win32_mingw73
     - name: ls
       shell: bash
       run: |
