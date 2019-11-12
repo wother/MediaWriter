@@ -48,19 +48,16 @@ jobs:
     - uses: actions/checkout@v1
       with:
         fetch-depth: 1
-    - name: Install dependencies
-      run: |
-        choco install wget
-        choco install 7zip
-        pip install requests
-    - name: ls
-      shell: bash
-      run: ls
     - name: Install Qt
-      run: |
-        wget https://git.kaidan.im/lnj/qli-installer/raw/master/qli-installer.py
-        python qli-installer.py 5.12.3 windows desktop win32_mingw73
+      uses: jurplel/install-qt-action@v1
+      with:
+        version: 5.12.5
+        arch: win32_mingw53
     - name: ls
       shell: bash
-      run: ls
+      run: |
+        set -x
+        set -e
+        ls
+        ls ..
 
