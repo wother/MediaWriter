@@ -63,13 +63,13 @@ jobs:
         ls
         ls ..
         echo "--"
-        ls ../Qt5.12.5/
+        ls ../Qt/
         echo "--"
-        ls ../Qt5.12.5/5.12.5/
+        ls ../Qt/5.12.5/
         echo "--"
-        ls ../Qt5.12.5/5.12.5/mingw73_32/
+        ls ../Qt/5.12.5/mingw73_32/
         echo "--"
-        ls ../Qt5.12.5/5.12.5/mingw73_32/bin
+        ls ../Qt/5.12.5/mingw73_32/bin
         echo "--"
     - name: Build
       shell: bash
