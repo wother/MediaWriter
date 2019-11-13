@@ -79,5 +79,5 @@ jobs:
         mkdir build
         cd build
         ../../Qt/Qt5.12.5/5.12.5/mingw73_32/bin/qmake.exe ..
-        mingw32-make -j2
+        mingw32-make -j2 VERBOSE=1
 
