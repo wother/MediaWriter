@@ -65,17 +65,19 @@ jobs:
         echo "--"
         ls ../Qt/
         echo "--"
-        ls ../Qt/5.12.5/
+        ls ../Qt/Qt5.12.5/
         echo "--"
-        ls ../Qt/5.12.5/mingw73_32/
+        ls ../Qt/Qt5.12.5/5.12.5/
         echo "--"
-        ls ../Qt/5.12.5/mingw73_32/bin
+        ls ../Qt/Qt5.12.5/5.12.5/mingw73_32/
+        echo "--"
+        ls ../Qt/Qt5.12.5/5.12.5/mingw73_32/bin
         echo "--"
     - name: Build
       shell: bash
       run: |
         mkdir build
         cd build
-        ../../Qt5.12.5/5.12.5/mingw73_32/bin/qmake.exe ..
+        ../../Qt/Qt5.12.5/5.12.5/mingw73_32/bin/qmake.exe ..
         mingw32-make -j2
 
