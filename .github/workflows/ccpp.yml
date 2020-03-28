@@ -57,6 +57,8 @@ jobs:
       run: |
         which g++
         echo "..............."
+        find / -name "g++" 2>/dev/null
+        echo "..............."
         mkdir build
         cd build
         "$Qt5_Dir/bin/qmake" ..
