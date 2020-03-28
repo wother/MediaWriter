@@ -55,10 +55,14 @@ jobs:
     - name: Build
       shell: bash
       run: |
-        export PATH=$(echo "$PATH" | sed -e 's/:\/c\/ProgramData\/Chocolatey\/bin//')
+        export PATH=$(echo "$PATH" | sed -e 's/:\/c\/ProgramData\/Chocolatey\/bin//' | sed -e 's/:\/c\/Strawberry\/c\/bin//')
         which g++
         echo "..............."
-        find /c/ -name "g++" 2>/dev/null
+        ls $Qt5_Dir/
+        echo "..............."
+        ls $Qt5_Dir/..
+        echo "..............."
+        find $Qt5_Dir/.. | grep "g++"
         echo "..............."
         mkdir build
         cd build
