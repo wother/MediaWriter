@@ -55,7 +55,7 @@ jobs:
     - name: Install Tools
       shell: bash
       run: |
-        python -m aqt tool -O d:\a\MediaWriter/Qt windows tools_mingw   7.3.0-1-201903151311 qt.tools.win32_mingw730
+        python -m aqt tool -O d:\a\MediaWriter/Qt windows tools_mingw   7.3.0-1-201903151311 qt.tools.win32_mingw730 || true
     - name: Build
       shell: bash
       run: |
