@@ -60,7 +60,7 @@ jobs:
       shell: bash
       run: |
         export PATH=$(echo "$PATH" | sed -e 's/:\/c\/ProgramData\/Chocolatey\/bin//' | sed -e 's/:\/c\/Strawberry\/c\/bin//')
-        export PATH="$Qt5_Dir/../..:$PATH"
+        export PATH="$Qt5_Dir/../../Tools:$PATH"
         mkdir build
         cd build
         "$Qt5_Dir/bin/qmake" ..
