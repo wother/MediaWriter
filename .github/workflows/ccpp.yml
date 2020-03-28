@@ -48,36 +48,15 @@ jobs:
     - uses: actions/checkout@v1
       with:
         fetch-depth: 1
-    - name: Install dependencies
-      run: |
-        pip install aqtinstall
     - name: Install Qt
-      shell: bash
-      run: |
-        aqt install --outputdir ../Qt 5.12.5 windows desktop win32_mingw73
-    - name: ls
-      shell: bash
-      run: |
-        set -x
-        set -e
-        ls
-        ls ..
-        echo "--"
-        ls ../Qt/
-        echo "--"
-        ls ../Qt/Qt5.12.5/
-        echo "--"
-        ls ../Qt/Qt5.12.5/5.12.5/
-        echo "--"
-        ls ../Qt/Qt5.12.5/5.12.5/mingw73_32/
-        echo "--"
-        ls ../Qt/Qt5.12.5/5.12.5/mingw73_32/bin
-        echo "--"
+      uses: jurplel/install-qt-action@v2
+      with:
+        arch: win32_mingw73
     - name: Build
       shell: bash
       run: |
         mkdir build
         cd build
-        ../../Qt/Qt5.12.5/5.12.5/mingw73_32/bin/qmake.exe ..
+        "$Qt5_Dir/bin/qmake" ..
         mingw32-make -j2 VERBOSE=1
 
