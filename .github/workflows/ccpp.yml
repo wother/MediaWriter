@@ -51,13 +51,14 @@ jobs:
     - name: Install Qt
       uses: jurplel/install-qt-action@v2
       with:
-        arch: win64_mingw73
+        arch: win32_mingw73
     - name: Build
       shell: bash
       run: |
+        export PATH=$(echo "$PATH" | sed -e 's/:\/c\/ProgramData\/Chocolatey\/bin//')
         which g++
         echo "..............."
-        find / -name "g++" 2>/dev/null
+        find /c/ -name "g++" 2>/dev/null
         echo "..............."
         mkdir build
         cd build
