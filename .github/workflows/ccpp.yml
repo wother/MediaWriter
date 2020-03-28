@@ -61,6 +61,8 @@ jobs:
       run: |
         export PATH=$(echo "$PATH" | sed -e 's/:\/c\/ProgramData\/Chocolatey\/bin//' | sed -e 's/:\/c\/Strawberry\/c\/bin//')
         export PATH="$Qt5_Dir/../..:$PATH"
+        mkdir build
+        cd build
         "$Qt5_Dir/bin/qmake" ..
         mingw32-make -j2 VERBOSE=1
 
