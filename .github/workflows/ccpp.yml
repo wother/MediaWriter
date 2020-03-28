@@ -52,20 +52,15 @@ jobs:
       uses: jurplel/install-qt-action@v2
       with:
         arch: win32_mingw73
+    - name: Install Tools
+      shell: bash
+      run: |
+        python -m aqt install -O d:\a\MediaWriter/Qt windows tools_mingw   7.3.0-1-201903151311 qt.tools.win32_mingw730
     - name: Build
       shell: bash
       run: |
         export PATH=$(echo "$PATH" | sed -e 's/:\/c\/ProgramData\/Chocolatey\/bin//' | sed -e 's/:\/c\/Strawberry\/c\/bin//')
-        which g++
-        echo "..............."
-        ls $Qt5_Dir/
-        echo "..............."
-        ls $Qt5_Dir/..
-        echo "..............."
-        find $Qt5_Dir/.. | grep "g++"
-        echo "..............."
-        mkdir build
-        cd build
+        export PATH="$Qt5_Dir/../..:$PATH"
         "$Qt5_Dir/bin/qmake" ..
         mingw32-make -j2 VERBOSE=1
 
