@@ -51,10 +51,12 @@ jobs:
     - name: Install Qt
       uses: jurplel/install-qt-action@v2
       with:
-        arch: win32_mingw73
+        arch: win64_mingw73
     - name: Build
       shell: bash
       run: |
+        which g++
+        echo "..............."
         mkdir build
         cd build
         "$Qt5_Dir/bin/qmake" ..
