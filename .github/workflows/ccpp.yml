@@ -89,7 +89,7 @@ jobs:
     - name: Windeployqt
       shell: bash
       run: |
-        cd build/release
+        cd build/app
         $Qt5_Dir/bin/windeployqt -qmldir ../.. mediawriter.exe
     - name: Installer
       shell: bash
