@@ -16,7 +16,7 @@ popd >/dev/null
 
 cd "${SCRIPTDIR}/../.."
 
-INSTALLER="$SCRIPTDIR/FedoraMediaWriter-osx-$(git describe --tags).dmg"
+INSTALLER="$SCRIPTDIR/FedoraMediaWriter-osx-$(git describe --tags --always).dmg"
 
 function configure() {
     rm -fr "build"
