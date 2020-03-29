@@ -18,9 +18,31 @@ jobs:
     - name: Build
       run: make -j2
 
+  Flatpak:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+      with:
+        fetch-depth: 1
+    - name: Install dependencies
+      run: |
+        sudo apt update
+        sudo apt install flatpak flatpak-builder
+    - name: Install Flatpak KDE SDK
+      run: |
+        sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+        sudo flatpak install --system -y flathub org.kde.Platform//5.14
+        sudo flatpak install --system -y flathub org.kde.Sdk//5.14
+    - name: Build the Flatpak package
+      run: |
+        pushd dist/flatpak
+        sudo flatpak-builder --repo=flatpak-repo --force-clean flatpak-build org.fedoraproject.MediaWriter.json
+        flatpak build-bundle flatpak-repo org.fedoraproject.MediaWriter.flatpak org.fedoraproject.MediaWriter
+        mv org.fedoraproject.MediaWriter.flatpak ..
+        popd
+
   macOS:
     runs-on: macos-latest
-
     steps:
     - uses: actions/checkout@v1
       with:
@@ -33,26 +55,25 @@ jobs:
         brew install git
     - name: Configure
       run: |
-        dist/mac/build.sh configure
+        bash dist/mac/build.sh configure
     - name: Build
       run: |
-        dist/mac/build.sh build
+        bash dist/mac/build.sh build
     - name: Insert dependencies
       run: |
-        dist/mac/build.sh deps
+        bash dist/mac/build.sh deps
     - name: Sign (TBD)
       run: |
-        true # dist/mac/build.sh sign
+        true # bash  dist/mac/build.sh sign
     - name: Package
       run: |
-        dist/mac/build.sh dmg
+        bash dist/mac/build.sh dmg
     - name: Notarize (TBD)
       run: |
-        dist/mac/build.sh notarize
+        bash dist/mac/build.sh notarize
 
   Windows:
     runs-on: windows-latest
-
     steps:
     - uses: actions/checkout@v1
       with:
