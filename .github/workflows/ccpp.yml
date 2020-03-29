@@ -1,9 +1,15 @@
 name: Automatic build
 
-on: [push]
+on:
+  push:
+    branches:
+      - '**'
+  release:
+    types: [ created ]
 
 jobs:
   Linux:
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
@@ -19,6 +25,7 @@ jobs:
       run: make -j2
 
   Flatpak:
+    if: github.event_name == 'release'
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
@@ -35,11 +42,18 @@ jobs:
         sudo flatpak install --system -y flathub org.kde.Sdk//5.14
     - name: Build the Flatpak package
       run: |
+        TAG_NAME=$(./dist/get-tag-name.sh)
         pushd dist/flatpak
         sudo flatpak-builder --repo=flatpak-repo --force-clean flatpak-build org.fedoraproject.MediaWriter.json
         flatpak build-bundle flatpak-repo org.fedoraproject.MediaWriter.flatpak org.fedoraproject.MediaWriter
-        mv org.fedoraproject.MediaWriter.flatpak ..
+        mv org.fedoraproject.MediaWriter.flatpak ../../org.fedoraproject.MediaWriter-$TAG_NAME.flatpak
         popd
+    - name: Upload to GitHub
+      if: github.event_name == 'release'
+      shell: bash
+      run: |
+        TAG_NAME=$(./dist/get-tag-name.sh)
+        ./dist/upload-to_github.sh github_api_token=${{ secrets.GITHUB_TOKEN }} tag="$TAG_NAME" filename="org.fedoraproject.MediaWriter-$TAG_NAME.flatpak"
 
   macOS:
     runs-on: macos-latest
@@ -63,23 +77,33 @@ jobs:
         TAG_NAME=$(bash ./dist/get-tag-name.sh)
         bash dist/mac/build.sh build
     - name: Insert dependencies
+      if: github.event_name == 'release'
       run: |
         TAG_NAME=$(bash ./dist/get-tag-name.sh)
         bash dist/mac/build.sh deps
     - name: Sign (TBD)
+      if: github.event_name == 'release'
       run: |
         TAG_NAME=$(bash ./dist/get-tag-name.sh)
         true # bash  dist/mac/build.sh sign
     - name: Package
+      if: github.event_name == 'release'
       run: |
         TAG_NAME=$(bash ./dist/get-tag-name.sh)
         cd build/app
-        create-dmg "Fedora Media Writer.app"
+        create-dmg "Fedora Media Writer.app" || true # without signing, create-dmg returns an error code
         mv Fedora*.dmg ../../FedoraMediaWriter-osx-$TAG_NAME.unnotarized.dmg
     - name: Notarize (TBD)
+      if: github.event_name == 'release'
       run: |
         TAG_NAME=$(bash ./dist/get-tag-name.sh)
         true # bash dist/mac/build.sh notarize
+    - name: Upload to GitHub
+      if: github.event_name == 'release'
+      shell: bash
+      run: |
+        TAG_NAME=$(./dist/get-tag-name.sh)
+        ./dist/upload-to_github.sh github_api_token=${{ secrets.GITHUB_TOKEN }} tag="$TAG_NAME" filename="FedoraMediaWriter-osx-$TAG_NAME.unnotarized.dmg"
 
   Windows:
     runs-on: windows-latest
@@ -128,6 +152,7 @@ jobs:
         "$Qt5_Dir/bin/qmake"  ..
         mingw32-make -j2 VERBOSE=1
     - name: Windeployqt
+      if: github.event_name == 'release'
       shell: bash
       run: |
         cd build/app/release
@@ -137,6 +162,7 @@ jobs:
         cp $Qt5_Dir/bin/libwinpthread*.dll .
         cp $Qt5_Dir/bin/libgcc*.dll .
     - name: Installer
+      if: github.event_name == 'release'
       shell: bash
       run: |
         TAG_NAME=$(bash ./dist/get-tag-name.sh)
@@ -160,3 +186,9 @@ jobs:
         unix2dos < "LICENSE" > "build/app/release/LICENSE.txt"
         makensis -DCERTPATH="" -DCERTPASS="" dist/win/mediawriter_native.tmp.nsi
         mv dist/win/FMW-setup.exe ./"FedoraMediaWriter-win64-$TAG_NAME.exe"
+    - name: Upload to GitHub
+      if: github.event_name == 'release'
+      shell: bash
+      run: |
+        TAG_NAME=$(./dist/get-tag-name.sh)
+        ./dist/upload-to_github.sh github_api_token=${{ secrets.GITHUB_TOKEN }} tag="$TAG_NAME" filename="FedoraMediaWriter-win64-$TAG_NAME.exe"
