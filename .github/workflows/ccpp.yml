@@ -142,7 +142,7 @@ jobs:
         VERSION_MAJOR=$(cut -d. -f1 <<< "${VERSION_STRIPPED}")
         VERSION_MINOR=$(cut -d. -f2 <<< "${VERSION_STRIPPED}")
         VERSION_BUILD=$(cut -d. -f3 <<< "${VERSION_STRIPPED}")
-        INSTALLED_SIZE=$(du -k -d0 "$BUILDPATH/app/release" | cut -f1)
+        INSTALLED_SIZE=$(du -k -d0 "build/app/release" | cut -f1)
 
         cp "dist/win/mediawriter_native.nsi" "dist/win/mediawriter_native.tmp.nsi"
 
