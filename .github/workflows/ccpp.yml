@@ -48,18 +48,6 @@ jobs:
     - uses: actions/checkout@v1
       with:
         fetch-depth: 1
-    - name: Install Tools
-      shell: bash
-      run: |
-        choco uninstall mingw
-        choco install mingw --version 7.3.0
-        #mkdir -p /d/a/MediaWriter/Qt
-        #cd /d/a/MediaWriter/Qt
-        # I seriously don't know how else to do this, I tried every combination of arguments to all tools I found and it still failed
-        # I don't feel particularly inclined to using the official installer as well, especially since they introduced the need to log in to use it
-        #curl -L https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/tools_mingw/qt.tools.win32_mingw730/7.3.0-1-201903151311i686-7.3.0-release-posix-dwarf-rt_v5-rev0.7z --output compiler.7z
-        #7z e -y compiler.7z
-        #rm compiler.7z
     - name: Install Qt
       uses: jurplel/install-qt-action@v2
       with:
@@ -71,6 +59,6 @@ jobs:
         #export PATH="$Qt5_Dir/../../Tools/mingw730_32/bin:$PATH"
         mkdir build
         cd build
-        "$Qt5_Dir/bin/qmake" ..
+        "$Qt5_Dir/bin/qmake" "QMAKE_CXXFLAGS+=-m32" "QMAKE_LFLAGS+=-m32" ..
         mingw32-make -j2 VERBOSE=1
 
