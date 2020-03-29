@@ -87,3 +87,4 @@ function notarize() {
     echo "$ hdiutil create -srcfolder app/Fedora\ Media\ Writer.app  -format UDCO -imagekey zlib-level=9 -scrub -volname FedoraMediaWriter-osx ../FedoraMediaWriter-osx-$(git describe --tags).dmg"
 }
 
+$1
