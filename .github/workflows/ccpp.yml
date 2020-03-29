@@ -53,7 +53,7 @@ jobs:
       shell: bash
       run: |
         TAG_NAME=$(bash ./dist/get-tag-name.sh)
-        ./dist/upload-to_github.sh github_api_token=${{ secrets.GITHUB_TOKEN }} tag="$TAG_NAME" filename="org.fedoraproject.MediaWriter-$TAG_NAME.flatpak"
+        ./dist/upload-to-github.sh github_api_token=${{ secrets.GITHUB_TOKEN }} tag="$TAG_NAME" filename="org.fedoraproject.MediaWriter-$TAG_NAME.flatpak"
 
   macOS:
     runs-on: macos-latest
@@ -103,7 +103,7 @@ jobs:
       shell: bash
       run: |
         TAG_NAME=$(bash ./dist/get-tag-name.sh)
-        ./dist/upload-to_github.sh github_api_token=${{ secrets.GITHUB_TOKEN }} tag="$TAG_NAME" filename="FedoraMediaWriter-osx-$TAG_NAME.unnotarized.dmg"
+        ./dist/upload-to-github.sh github_api_token=${{ secrets.GITHUB_TOKEN }} tag="$TAG_NAME" filename="FedoraMediaWriter-osx-$TAG_NAME.unnotarized.dmg"
 
   Windows:
     runs-on: windows-latest
@@ -191,4 +191,4 @@ jobs:
       shell: bash
       run: |
         TAG_NAME=$(bash ./dist/get-tag-name.sh)
-        ./dist/upload-to_github.sh github_api_token=${{ secrets.GITHUB_TOKEN }} tag="$TAG_NAME" filename="FedoraMediaWriter-win64-$TAG_NAME.exe"
+        ./dist/upload-to-github.sh github_api_token=${{ secrets.GITHUB_TOKEN }} tag="$TAG_NAME" filename="FedoraMediaWriter-win64-$TAG_NAME.exe"
