@@ -58,6 +58,7 @@ jobs:
       shell: bash
       run: |
         choco install nsis
+        chocco install dos2unix
     - name: Install Qt
       uses: jurplel/install-qt-action@v2
       with:
@@ -99,4 +100,5 @@ jobs:
     - name: Installer
       shell: bash
       run: |
+        unix2dos < "LICENSE" > "build/app/release/LICENSE.txt"
         makensis dist/win/mediawriter.nsi
