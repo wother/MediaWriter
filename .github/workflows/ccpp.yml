@@ -66,6 +66,7 @@ jobs:
         arch: win64_mingw73
     - name: Build xz-utils
       shell: bash
+      if: ${{ !steps.cache-qt.outputs.cache-hit }}
       run: |
         git clone https://git.tukaani.org/xz.git
         sed -i 's/#include "config.h"//' xz/src/common/common_w32res.rc
