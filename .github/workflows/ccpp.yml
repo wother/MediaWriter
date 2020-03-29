@@ -51,8 +51,12 @@ jobs:
     - name: Install Tools
       shell: bash
       run: |
-        pip install aqtinstall
-        python -m aqt tool --external 7z.exe -O d:\a\MediaWriter/Qt windows tools_mingw 7.3.0-0 qt.tools.win32_mingw730
+        mkdir -p /d/a/MediaWriter/Qt
+        cd /d/a/MediaWriter/Qt
+        # I seriously don't know how else to do this, I tried every combination of arguments to all tools I found and it still failed
+        # I don't feel particularly inclined to using the official installer as well, especially since they introduced the need to log in to use it
+        wget https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/tools_mingw/qt.tools.win32_mingw730/7.3.0-1-201903151311i686-7.3.0-release-posix-dwarf-rt_v5-rev0.7z
+        7z e 7.3.0-1-201903151311i686-7.3.0-release-posix-dwarf-rt_v5-rev0.7z
     - name: Install Qt
       uses: jurplel/install-qt-action@v2
       with:
