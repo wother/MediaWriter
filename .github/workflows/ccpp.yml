@@ -101,4 +101,4 @@ jobs:
       shell: bash
       run: |
         unix2dos < "LICENSE" > "build/app/release/LICENSE.txt"
-        makensis dist/win/mediawriter_native.nsi
+        makensis -DCERTPATH="" -DCERTPASS="" dist/win/mediawriter_native.nsi
