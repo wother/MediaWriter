@@ -42,7 +42,7 @@ jobs:
         sudo flatpak install --system -y flathub org.kde.Sdk//5.14
     - name: Build the Flatpak package
       run: |
-        TAG_NAME=$(./dist/get-tag-name.sh)
+        TAG_NAME=$(bash ./dist/get-tag-name.sh)
         pushd dist/flatpak
         sudo flatpak-builder --repo=flatpak-repo --force-clean flatpak-build org.fedoraproject.MediaWriter.json
         flatpak build-bundle flatpak-repo org.fedoraproject.MediaWriter.flatpak org.fedoraproject.MediaWriter
@@ -52,7 +52,7 @@ jobs:
       if: github.event_name == 'release'
       shell: bash
       run: |
-        TAG_NAME=$(./dist/get-tag-name.sh)
+        TAG_NAME=$(bash ./dist/get-tag-name.sh)
         ./dist/upload-to_github.sh github_api_token=${{ secrets.GITHUB_TOKEN }} tag="$TAG_NAME" filename="org.fedoraproject.MediaWriter-$TAG_NAME.flatpak"
 
   macOS:
@@ -102,7 +102,7 @@ jobs:
       if: github.event_name == 'release'
       shell: bash
       run: |
-        TAG_NAME=$(./dist/get-tag-name.sh)
+        TAG_NAME=$(bash ./dist/get-tag-name.sh)
         ./dist/upload-to_github.sh github_api_token=${{ secrets.GITHUB_TOKEN }} tag="$TAG_NAME" filename="FedoraMediaWriter-osx-$TAG_NAME.unnotarized.dmg"
 
   Windows:
@@ -190,5 +190,5 @@ jobs:
       if: github.event_name == 'release'
       shell: bash
       run: |
-        TAG_NAME=$(./dist/get-tag-name.sh)
+        TAG_NAME=$(bash ./dist/get-tag-name.sh)
         ./dist/upload-to_github.sh github_api_token=${{ secrets.GITHUB_TOKEN }} tag="$TAG_NAME" filename="FedoraMediaWriter-win64-$TAG_NAME.exe"
