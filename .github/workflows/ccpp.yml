@@ -91,15 +91,15 @@ jobs:
     - name: Windeployqt
       shell: bash
       run: |
-        mkdir build/release
-        cd build/release
-        mv ../app/release/mediawriter.exe .
-        mv ../app/helper.exe .
-        pwd
-        ls
-        $Qt5_Dir/bin/windeployqt -qmldir ../.. mediawriter.exe
+        mkdir build/app/release
+        cd build/app/release
+        mv ../helper.exe .
+        $Qt5_Dir/bin/windeployqt -qmldir ../../.. mediawriter.exe
+        cp $Qt5_Dir/bin/libstdc*.dll .
+        cp $Qt5_Dir/bin/libwinpthread*.dll .
+        cp $Qt5_Dir/bin/libgcc*.dll .
     - name: Installer
       shell: bash
       run: |
         unix2dos < "LICENSE" > "build/app/release/LICENSE.txt"
-        makensis dist/win/mediawriter.nsi
+        makensis dist/win/mediawriter_native.nsi
