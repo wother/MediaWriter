@@ -23,7 +23,7 @@ XPStyle on
 
 !ifdef INNER
     !echo "Inner invocation"                  ; just to see what's going on
-    OutFile "../../build/tempinstaller.exe"       ; not really important where this is
+    OutFile "tempinstaller.exe"               ; not really important where this is
     SetCompress off                           ; for speed
 !else
     !echo "Outer invocation"
@@ -34,8 +34,8 @@ XPStyle on
     !makensis '-DINNER "${__FILE__}"' = 0
 
     ; Run the temporary installer and then sign the unsigned binary that has been created
-    !system "chmod +x ../../build/tempinstaller.exe" = 0
-    !system "../../build/tempinstaller.exe" = 512
+    !system "chmod +x tempinstaller.exe" = 0
+    !system "tempinstaller.exe" = 512
     !if "${CERTPASS}" != ""
         !system 'osslsigncode sign -pkcs12 "${CERTPATH}/authenticode.pfx" -readpass "${CERTPASS}" -h sha256 -n "Fedora Media Writer" -i https://getfedora.org -t http://timestamp.verisign.com/scripts/timstamp.dll -in "../../build/wineprefix/drive_c/uninstall.unsigned.exe" -out "../../build/wineprefix/drive_c/uninstall.exe" ' = 0
     !else
