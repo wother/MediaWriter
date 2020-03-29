@@ -54,6 +54,10 @@ jobs:
       with:
         path: d:/a/MediaWriter/Qt
         key: QtCache
+    - name: Install dependencies
+      shell: bash
+      run: |
+        choco install nsis
     - name: Install Qt
       uses: jurplel/install-qt-action@v2
       with:
@@ -82,4 +86,12 @@ jobs:
         cd build
         "$Qt5_Dir/bin/qmake"  ..
         mingw32-make -j2 VERBOSE=1
-
+    - name: Windeployqt
+      shell: bash
+      run: |
+        cd build/release
+        $Qt5_Dir/bin/windeployqt -qmldir ../.. mediawriter.exe
+    - name: Installer
+      shell: bash
+      run: |
+        makensis dist/win/mediawriter.nsi
