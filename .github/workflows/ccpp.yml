@@ -52,14 +52,28 @@ jobs:
       id: cache-qt
       uses: actions/cache@v1
       with:
-        path: ../Qt
+        path: d:/a/MediaWriter/Qt
         key: QtCache
     - name: Install Qt
       uses: jurplel/install-qt-action@v2
       with:
         cached: ${{ steps.cache-qt.outputs.cache-hit }}
         arch: win64_mingw73
-    - name: Build
+    - name: Build xz-utils
+      shell: bash
+      run: |
+        git clone https://git.tukaani.org/xz.git
+        sed -i 's/#include "config.h"//' xz/src/common/common_w32res.rc
+        sed -i 's/PACKAGE_URL/"https://tukaani.org/xz/"/' xz/src/common/common_w32res.rc
+        sed -i 's/PACKAGE_URL/"https:\/\/tukaani.org\/xz\/"/' xz/src/common/common_w32res.rc
+        mkdir xz/build
+        cd xz/build
+        cmake -DCMAKE_SH="CMAKE_SH-NOTFOUND" -G "MinGW Makefiles" -DCMAKE_INSTALL_PREFIX="$Qt5_Dir" -DBUILD_SHARED_LIBS=ON ..
+        mingw32-make -j2 VERBOSE=1
+        mingw32-make install
+        # ugh
+        cp "$Qt5_Dir/bin/liblzma.dll" "$Qt5_Dir/bin/libliblzma.dll"
+    - name: Build MediaWriter
       shell: bash
       run: |
         #export PATH=$(echo "$PATH" | sed -e 's/:\/c\/ProgramData\/Chocolatey\/bin//' | sed -e 's/:\/c\/Strawberry\/c\/bin//')
