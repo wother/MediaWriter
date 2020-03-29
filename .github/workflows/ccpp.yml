@@ -58,7 +58,7 @@ jobs:
       shell: bash
       run: |
         choco install nsis
-        chocco install dos2unix
+        choco install dos2unix
     - name: Install Qt
       uses: jurplel/install-qt-action@v2
       with:
