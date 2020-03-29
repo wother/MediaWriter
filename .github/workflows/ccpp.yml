@@ -91,7 +91,6 @@ jobs:
     - name: Windeployqt
       shell: bash
       run: |
-        mkdir build/app/release
         cd build/app/release
         mv ../helper.exe .
         $Qt5_Dir/bin/windeployqt -qmldir ../../.. mediawriter.exe
