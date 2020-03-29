@@ -21,7 +21,7 @@ jobs:
       run: make -j2
 
   macOS:
-    runs-on: macOS-latest
+    runs-on: macos-latest
 
     steps:
     - uses: actions/checkout@v1
@@ -90,6 +90,8 @@ jobs:
       shell: bash
       run: |
         cd build/app
+        pwd
+        ls
         $Qt5_Dir/bin/windeployqt -qmldir ../.. mediawriter.exe
     - name: Installer
       shell: bash
