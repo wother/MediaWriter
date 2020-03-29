@@ -58,7 +58,7 @@ jobs:
       uses: jurplel/install-qt-action@v2
       with:
         cached: ${{ steps.cache-qt.outputs.cache-hit }}
-        arch: win32_mingw73
+        arch: win64_mingw73
     - name: Build
       shell: bash
       run: |
@@ -66,6 +66,6 @@ jobs:
         #export PATH="$Qt5_Dir/../../Tools/mingw730_32/bin:$PATH"
         mkdir build
         cd build
-        "$Qt5_Dir/bin/qmake" "QMAKE_CXXFLAGS+=-m32" "QMAKE_LFLAGS+=-m32" ..
+        "$Qt5_Dir/bin/qmake"  ..
         mingw32-make -j2 VERBOSE=1
 
