@@ -55,27 +55,27 @@ jobs:
         brew install git
     - name: Configure
       run: |
-        TAG_NAME=$(./dist/get-tag-name.sh)
+        TAG_NAME=$(bash ./dist/get-tag-name.sh)
         bash dist/mac/build.sh configure
     - name: Build
       run: |
-        TAG_NAME=$(./dist/get-tag-name.sh)
+        TAG_NAME=$(bash ./dist/get-tag-name.sh)
         bash dist/mac/build.sh build
     - name: Insert dependencies
       run: |
-        TAG_NAME=$(./dist/get-tag-name.sh)
+        TAG_NAME=$(bash ./dist/get-tag-name.sh)
         bash dist/mac/build.sh deps
     - name: Sign (TBD)
       run: |
-        TAG_NAME=$(./dist/get-tag-name.sh)
+        TAG_NAME=$(bash ./dist/get-tag-name.sh)
         true # bash  dist/mac/build.sh sign
     - name: Package
       run: |
-        TAG_NAME=$(./dist/get-tag-name.sh)
+        TAG_NAME=$(bash ./dist/get-tag-name.sh)
         bash dist/mac/build.sh dmg
     - name: Notarize (TBD)
       run: |
-        TAG_NAME=$(./dist/get-tag-name.sh)
+        TAG_NAME=$(bash ./dist/get-tag-name.sh)
         bash dist/mac/build.sh notarize
 
   Windows:
@@ -136,7 +136,7 @@ jobs:
     - name: Installer
       shell: bash
       run: |
-        TAG_NAME=$(./dist/get-tag-name.sh)
+        TAG_NAME=$(bash ./dist/get-tag-name.sh)
 
         VERSION_STRIPPED=$(sed "s/-.*//" <<< "${TAG_NAME}")
         VERSION_MAJOR=$(cut -d. -f1 <<< "${VERSION_STRIPPED}")
