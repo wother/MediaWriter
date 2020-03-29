@@ -76,7 +76,7 @@ jobs:
     - name: Notarize (TBD)
       run: |
         TAG_NAME=$(bash ./dist/get-tag-name.sh)
-        bash dist/mac/build.sh notarize
+        true # bash dist/mac/build.sh notarize
 
   Windows:
     runs-on: windows-latest

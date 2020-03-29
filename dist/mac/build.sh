@@ -1,5 +1,8 @@
 #!/bin/bash
 
+set -x
+set -e
+
 PATH="/usr/local/opt/qt/bin:/usr/local/opt/git/bin:$PATH"
 
 DEVELOPER_ID="Mac Developer: Martin Briza (N952V7G2F5)"
