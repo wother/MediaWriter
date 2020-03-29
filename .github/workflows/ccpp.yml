@@ -73,7 +73,9 @@ jobs:
     - name: Package
       run: |
         TAG_NAME=$(bash ./dist/get-tag-name.sh)
-        create-dmg "build/app/Fedora Media Writer.app"
+        cd build/app
+        ls
+        create-dmg "Fedora Media Writer.app"
     - name: Notarize (TBD)
       run: |
         TAG_NAME=$(bash ./dist/get-tag-name.sh)
@@ -140,6 +142,9 @@ jobs:
         TAG_NAME=$(bash ./dist/get-tag-name.sh)
 
         VERSION_STRIPPED=$(sed "s/-.*//" <<< "${TAG_NAME}")
+        if [[ "$VERSION_STRIPPED" == "" ]]; then
+            VERSION_STRIPPED=0.0.0
+        fi
         VERSION_MAJOR=$(cut -d. -f1 <<< "${VERSION_STRIPPED}")
         VERSION_MINOR=$(cut -d. -f2 <<< "${VERSION_STRIPPED}")
         VERSION_BUILD=$(cut -d. -f3 <<< "${VERSION_STRIPPED}")
