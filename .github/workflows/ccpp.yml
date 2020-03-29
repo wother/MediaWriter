@@ -55,21 +55,27 @@ jobs:
         brew install git
     - name: Configure
       run: |
+        TAG_NAME=$(./dist/get-tag-name.sh)
         bash dist/mac/build.sh configure
     - name: Build
       run: |
+        TAG_NAME=$(./dist/get-tag-name.sh)
         bash dist/mac/build.sh build
     - name: Insert dependencies
       run: |
+        TAG_NAME=$(./dist/get-tag-name.sh)
         bash dist/mac/build.sh deps
     - name: Sign (TBD)
       run: |
+        TAG_NAME=$(./dist/get-tag-name.sh)
         true # bash  dist/mac/build.sh sign
     - name: Package
       run: |
+        TAG_NAME=$(./dist/get-tag-name.sh)
         bash dist/mac/build.sh dmg
     - name: Notarize (TBD)
       run: |
+        TAG_NAME=$(./dist/get-tag-name.sh)
         bash dist/mac/build.sh notarize
 
   Windows:
@@ -130,6 +136,21 @@ jobs:
     - name: Installer
       shell: bash
       run: |
+        TAG_NAME=$(./dist/get-tag-name.sh)
+
+        VERSION_STRIPPED=$(sed "s/-.*//" <<< "${TAG_NAME}")
+        VERSION_MAJOR=$(cut -d. -f1 <<< "${VERSION_STRIPPED}")
+        VERSION_MINOR=$(cut -d. -f2 <<< "${VERSION_STRIPPED}")
+        VERSION_BUILD=$(cut -d. -f3 <<< "${VERSION_STRIPPED}")
+        INSTALLED_SIZE=$(du -k -d0 "$BUILDPATH/app/release" | cut -f1)
+
+        cp "dist/win/mediawriter_native.nsi" "dist/win/mediawriter_native.tmp.nsi"
+
+        sed -i "s/#!define VERSIONMAJOR/!define VERSIONMAJOR ${VERSION_MAJOR}/" "dist/win/mediawriter_native.tmp.nsi"
+        sed -i "s/#!define VERSIONMINOR/!define VERSIONMINOR ${VERSION_MINOR}/" "dist/win/mediawriter_native.tmp.nsi"
+        sed -i "s/#!define VERSIONBUILD/!define VERSIONBUILD ${VERSION_BUILD}/" "dist/win/mediawriter_native.tmp.nsi"
+        sed -i "s/#!define INSTALLSIZE/!define INSTALLSIZE ${INSTALLED_SIZE}/" "dist/win/mediawriter_native.tmp.nsi"
+
         unix2dos < "LICENSE" > "build/app/release/LICENSE.txt"
-        makensis -DCERTPATH="" -DCERTPASS="" dist/win/mediawriter_native.nsi
-        mv dist/win/FMW-setup.exe ./FedoraMediaWriter-win64-TAG.exe
+        makensis -DCERTPATH="" -DCERTPASS="" dist/win/mediawriter_native.tmpp.nsi
+        mv dist/win/FMW-setup.exe ./"FedoraMediaWriter-win64-$TAG_NAME.exe"

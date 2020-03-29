@@ -16,7 +16,13 @@ popd >/dev/null
 
 cd "${SCRIPTDIR}/../.."
 
-INSTALLER="$SCRIPTDIR/FedoraMediaWriter-osx-$(git describe --tags --always).dmg"
+if [[ "$TAG_NAME" == "" ]]; then
+    VERSION=$(git describe --tags --always)
+else
+    VERSION="$TAG_NAME"
+fi
+
+INSTALLER="$SCRIPTDIR/FedoraMediaWriter-osx-$VERSION.dmg"
 
 function configure() {
     rm -fr "build"
@@ -24,13 +30,13 @@ function configure() {
     pushd build >/dev/null
 
     echo "=== Building ==="
-    ${QMAKE} .. >/dev/null
+    ${QMAKE} ..
     popd >/dev/null
 }
 
 function build() {
     pushd build >/dev/null
-    make -j9 >/dev/null
+    make -j9
     popd >/dev/null
 }
 
@@ -70,21 +76,21 @@ function sign() {
 }
 
 function dmg() {
-pushd build >/dev/null
+    pushd build >/dev/null
     echo "=== Creating a disk image ==="
     # create the .dmg package - beware, it won't work while FMW is running (blocks partition mounting)
-    rm -f ../FedoraMediaWriter-osx-$(git describe --tags).dmg
-    hdiutil create -srcfolder app/Fedora\ Media\ Writer.app  -format UDCO -imagekey zlib-level=9 -scrub -volname FedoraMediaWriter-osx ../FedoraMediaWriter-osx-$(git describe --tags).unnotarized.dmg
+    rm -f "../FedoraMediaWriter-osx-$VERSION.dmg"
+    hdiutil create -srcfolder app/Fedora\ Media\ Writer.app  -format UDCO -imagekey zlib-level=9 -scrub -volname FedoraMediaWriter-osx ../FedoraMediaWriter-osx-$VERSION.unnotarized.dmg
     popd >/dev/null
 }
 
 function notarize() {
     echo "=== Submitting for notarization ==="
-    xcrun altool --notarize-app --primary-bundle-id "org.fedoraproject.mediawriter" --username "${NOTARIZATION_EMAIL}" --password "@keychain:${NOTARIZATION_KEYCHAIN_ITEM}" --asc-provider "${NOTARIZATION_ITUNES_ORGID}" --file "../FedoraMediaWriter-osx-$(git describe --tags).unnotarized.dmg"
+    xcrun altool --notarize-app --primary-bundle-id "org.fedoraproject.mediawriter" --username "${NOTARIZATION_EMAIL}" --password "@keychain:${NOTARIZATION_KEYCHAIN_ITEM}" --asc-provider "${NOTARIZATION_ITUNES_ORGID}" --file "../FedoraMediaWriter-osx-$VERSION.unnotarized.dmg"
 
     echo "DONE. After notarization finished (you'll get an email), run:"
     echo "$ xcrun stabler stable app/Fedora\ Media\ Writer.app"
-    echo "$ hdiutil create -srcfolder app/Fedora\ Media\ Writer.app  -format UDCO -imagekey zlib-level=9 -scrub -volname FedoraMediaWriter-osx ../FedoraMediaWriter-osx-$(git describe --tags).dmg"
+    echo "$ hdiutil create -srcfolder app/Fedora\ Media\ Writer.app  -format UDCO -imagekey zlib-level=9 -scrub -volname FedoraMediaWriter-osx ../FedoraMediaWriter-osx-$VERSION.dmg"
 }
 
 $1
