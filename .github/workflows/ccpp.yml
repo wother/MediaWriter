@@ -4,9 +4,7 @@ on: [push]
 
 jobs:
   Linux:
-
     runs-on: ubuntu-latest
-    
     steps:
     - uses: actions/checkout@v1
       with:
@@ -35,11 +33,22 @@ jobs:
         brew install git
     - name: Configure
       run: |
-        export PATH="/usr/local/opt/qt/bin:/usr/local/opt/git/bin:$PATH"
-        ls /usr/local/opt/qt/bin
-        qmake .
+        dist/mac/build.sh configure
     - name: Build
-      run: make -j2
+      run: |
+        dist/mac/build.sh build
+    - name: Insert dependencies
+      run: |
+        dist/mac/build.sh deps
+    - name: Sign (TBD)
+      run: |
+        true # dist/mac/build.sh sign
+    - name: Package
+      run: |
+        dist/mac/build.sh dmg
+    - name: Notarize (TBD)
+      run: |
+        dist/mac/build.sh notarize
 
   Windows:
     runs-on: windows-latest
@@ -102,3 +111,4 @@ jobs:
       run: |
         unix2dos < "LICENSE" > "build/app/release/LICENSE.txt"
         makensis -DCERTPATH="" -DCERTPASS="" dist/win/mediawriter_native.nsi
+        mv dist/win/FMW-setup.exe ./FedoraMediaWriter-win64-TAG.exe
