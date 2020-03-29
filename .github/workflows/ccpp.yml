@@ -152,5 +152,5 @@ jobs:
         sed -i "s/#!define INSTALLSIZE/!define INSTALLSIZE ${INSTALLED_SIZE}/" "dist/win/mediawriter_native.tmp.nsi"
 
         unix2dos < "LICENSE" > "build/app/release/LICENSE.txt"
-        makensis -DCERTPATH="" -DCERTPASS="" dist/win/mediawriter_native.tmpp.nsi
+        makensis -DCERTPATH="" -DCERTPASS="" dist/win/mediawriter_native.tmp.nsi
         mv dist/win/FMW-setup.exe ./"FedoraMediaWriter-win64-$TAG_NAME.exe"
