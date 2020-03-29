@@ -53,6 +53,7 @@ jobs:
         echo 'export PATH="/usr/local/opt/qt/bin:$PATH"' >> ~/.bash_profile
         brew install xz
         brew install git
+        npm install -g create-dmg
     - name: Configure
       run: |
         TAG_NAME=$(bash ./dist/get-tag-name.sh)
@@ -72,7 +73,7 @@ jobs:
     - name: Package
       run: |
         TAG_NAME=$(bash ./dist/get-tag-name.sh)
-        bash dist/mac/build.sh dmg
+        create-dmg "build/app/Fedora Media Writer.app"
     - name: Notarize (TBD)
       run: |
         TAG_NAME=$(bash ./dist/get-tag-name.sh)
