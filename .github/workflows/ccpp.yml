@@ -74,8 +74,8 @@ jobs:
       run: |
         TAG_NAME=$(bash ./dist/get-tag-name.sh)
         cd build/app
-        ls
         create-dmg "Fedora Media Writer.app"
+        mv Fedora*.dmg ../../FedoraMediaWriter-osx-$TAG_NAME.unnotarized.dmg
     - name: Notarize (TBD)
       run: |
         TAG_NAME=$(bash ./dist/get-tag-name.sh)

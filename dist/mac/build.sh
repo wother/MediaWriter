@@ -96,4 +96,13 @@ function notarize() {
     echo "$ hdiutil create -srcfolder app/Fedora\ Media\ Writer.app  -format UDCO -imagekey zlib-level=9 -scrub -volname FedoraMediaWriter-osx ../FedoraMediaWriter-osx-$VERSION.dmg"
 }
 
-$1
+if [[ $# -eq 0 ]]; then
+    configure
+    build
+    deps
+    sign
+    dmg
+    notarize
+else
+    $1
+fi
