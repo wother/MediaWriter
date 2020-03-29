@@ -64,7 +64,7 @@ jobs:
       run: |
         git clone https://git.tukaani.org/xz.git
         sed -i 's/#include "config.h"//' xz/src/common/common_w32res.rc
-        sed -i 's/PACKAGE_URL/"https://tukaani.org/xz/"/' xz/src/common/common_w32res.rc
+        sed -i 's/PACKAGE_NAME/"liblzma"/' src/common/common_w32res.rc
         sed -i 's/PACKAGE_URL/"https:\/\/tukaani.org\/xz\/"/' xz/src/common/common_w32res.rc
         mkdir xz/build
         cd xz/build
