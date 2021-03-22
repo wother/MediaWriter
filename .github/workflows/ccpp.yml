@@ -34,7 +34,7 @@ jobs:
         make -j2
 
   Flatpak:
-    if: github.event_name == 'release'
+    if: github.event_name != 'release'
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
@@ -55,14 +55,20 @@ jobs:
         pushd dist/flatpak
         sudo flatpak-builder --repo=flatpak-repo --force-clean flatpak-build org.fedoraproject.MediaWriter.json
         flatpak build-bundle flatpak-repo org.fedoraproject.MediaWriter.flatpak org.fedoraproject.MediaWriter
-        mv org.fedoraproject.MediaWriter.flatpak ../../org.fedoraproject.MediaWriter-$TAG_NAME.flatpak
+        mv org.fedoraproject.MediaWriter.flatpak ../../org.fedoraproject.MediaWriter.flatpak
         popd
-    - name: Upload to GitHub
-      if: github.event_name == 'release'
-      shell: bash
-      run: |
-        TAG_NAME=$(bash ./dist/get-tag-name.sh)
-        bash ./dist/upload-to-github.sh github_api_token=${{ secrets.GITHUB_TOKEN }} tag="$TAG_NAME" filename="org.fedoraproject.MediaWriter-$TAG_NAME.flatpak"
+    - name: Upload artifacts to GitHub
+      if: github.event_name != 'release'
+      uses: actions/upload-artifact@v2
+      with:
+            name: org.fedoraproject.MediaWriter.flatpak
+            path: org.fedoraproject.MediaWriter.flatpak
+    #- name: Upload to GitHub
+      #if: github.event_name == 'release'
+      #shell: bash
+      #run: |
+        #TAG_NAME=$(bash ./dist/get-tag-name.sh)
+        #bash ./dist/upload-to-github.sh github_api_token=${{ secrets.GITHUB_TOKEN }} tag="$TAG_NAME" filename="org.fedoraproject.MediaWriter-$TAG_NAME.flatpak"
 
   macOS:
     runs-on: macos-latest
@@ -170,7 +176,7 @@ jobs:
         cmake -DCMAKE_SH="CMAKE_SH-NOTFOUND" -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="$Qt5_Dir" ..
         mingw32-make -j2 VERBOSE=1
     - name: Windeployqt
-      if: github.event_name == 'release'
+      if: github.event_name != 'release'
       shell: bash
       run: |
         cd build/app/release
@@ -189,7 +195,7 @@ jobs:
         cp $Qt5_Dir/bin/liblzma.dll .
         cp /c/Program\ Files/OpenSSL/bin/*.dll .
     - name: Installer
-      if: github.event_name == 'release'
+      if: github.event_name != 'release'
       shell: bash
       run: |
         TAG_NAME=$(bash ./dist/get-tag-name.sh)
@@ -213,10 +219,16 @@ jobs:
         unix2dos < "LICENSE.GPL-2" > "build/app/release/LICENSE.GPL-2.txt"
         unix2dos < "LICENSE.LGPL-2" > "build/app/release/LICENSE.LGPL-2.txt"
         makensis -DCERTPATH="" -DCERTPASS="" dist/win/mediawriter_native.tmp.nsi
-        mv dist/win/FMW-setup.exe ./"FedoraMediaWriter-win64-$TAG_NAME.exe"
-    - name: Upload to GitHub
-      if: github.event_name == 'release'
-      shell: bash
-      run: |
-        TAG_NAME=$(bash ./dist/get-tag-name.sh)
-        bash ./dist/upload-to-github.sh github_api_token=${{ secrets.GITHUB_TOKEN }} tag="$TAG_NAME" filename="FedoraMediaWriter-win64-$TAG_NAME.exe"
+        mv dist/win/FMW-setup.exe ./"FedoraMediaWriter-win64.exe"
+    - name: Upload artifacts to GitHub
+      if: github.event_name != 'release'
+      uses: actions/upload-artifact@v2
+      with:
+            name: FedoraMediaWriter-win64.exe
+            path: FedoraMediaWriter-win64.exe
+    #- name: Upload to GitHub
+      #if: github.event_name == 'release'
+      #shell: bash
+      #run: |
+        #TAG_NAME=$(bash ./dist/get-tag-name.sh)
+        #bash ./dist/upload-to-github.sh github_api_token=${{ secrets.GITHUB_TOKEN }} tag="$TAG_NAME" filename="FedoraMediaWriter-win64-$TAG_NAME.exe"
