@@ -2,8 +2,36 @@
    {
       "version":"4.11.1",
       "arch":"x86_64",
-      "link":"https://mirrors.ocf.berkeley.edu/parrot/iso/4.11.1/Parrot-home-4.11.1_amd64.iso",
+      "link":"https://download.parrot.sh/parrot/iso/4.11.1/Parrot-home-4.11.1_amd64.iso",
       "variant":"Home",
       "subvariant":"MATE"
+   },
+   {
+      "version":"4.11.1",
+      "arch":"x86_64",
+      "link":"https://download.parrot.sh/parrot/iso/4.11.1/Parrot-kde-home-4.11.1_amd64.iso",
+      "variant":"Home",
+      "subvariant":"KDE"
+   },
+   {
+      "version":"4.11.1",
+      "arch":"x86_64",
+      "link":"https://download.parrot.sh/parrot/iso/4.11.1/Parrot-security-4.11.1_amd64.iso",
+      "variant":"Security",
+      "subvariant":"MATE"
+   },
+   {
+      "version":"4.11.1",
+      "arch":"x86_64",
+      "link":"https://download.parrot.sh/parrot/iso/4.11.1/Parrot-kde-security-4.11.1_amd64.iso",
+      "variant":"Security",
+      "subvariant":"KDE"
+   },
+   {
+      "version":"4.11.1",
+      "arch":"x86_64",
+      "link":"https://download.parrot.sh/parrot/iso/4.11.1/Parrot-xfce-4.11.1_amd64.iso",
+      "variant":"Home",
+      "subvariant":"XFCE"
    }
 ]

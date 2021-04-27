@@ -2,8 +2,60 @@
     {
         "subvariant": "MATE",
         "category": "product",
-        "name": "Parrot Home Mate",
-        "summary": "This is the Home eddition of the Parrot ISO.",
+        "name": "Parrot Home MATE",
+        "summary": "This is the Home eddition of the Parrot ISO, packaged with the MATE desktop.",
+        "icon": "qrc:/logos/workstation",
+        "screenshots": [],
+        "description": [
+            "<p>",
+            "This is a description, or a placeholder for a description rather.",
+            "</p>"
+        ]
+    },
+    {
+        "subvariant": "KDE",
+        "category": "product",
+        "name": "Parrot Home KDE",
+        "summary": "This is the Home eddition of the Parrot ISO, packaged with the KDE desktop.",
+        "icon": "qrc:/logos/workstation",
+        "screenshots": [],
+        "description": [
+            "<p>",
+            "This is a description, or a placeholder for a description rather.",
+            "</p>"
+        ]
+    },
+    {
+        "subvariant": "MATE",
+        "category": "product",
+        "name": "Parrot Security Mate",
+        "summary": "This is the Security eddition of the Parrot ISO, packaged with the MATE desktop.",
+        "icon": "qrc:/logos/workstation",
+        "screenshots": [],
+        "description": [
+            "<p>",
+            "This is a description, or a placeholder for a description rather.",
+            "</p>"
+        ]
+    },
+    {
+        "subvariant": "KDE",
+        "category": "product",
+        "name": "Parrot Security KDE",
+        "summary": "This is the Security eddition of the Parrot ISO, packeaged with the KDE desktop.",
+        "icon": "qrc:/logos/workstation",
+        "screenshots": [],
+        "description": [
+            "<p>",
+            "This is a description, or a placeholder for a description rather.",
+            "</p>"
+        ]
+    },
+    {
+        "subvariant": "XFCE",
+        "category": "product",
+        "name": "Parrot Home XFCE",
+        "summary": "This is the Home eddition of the Parrot ISO, packaged with the lightweight XFCE desktop.",
         "icon": "qrc:/logos/workstation",
         "screenshots": [],
         "description": [
